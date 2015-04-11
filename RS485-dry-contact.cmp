@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-dec-23)-stable date = Сб 11 апр 2015 20:49:07
+Cmp-Mod V01 Created by CvPcb (2013-dec-23)-stable date = Сб 11 апр 2015 21:16:52
 
 BeginCmp
 TimeStamp = /5528FC5B;
@@ -57,13 +57,6 @@ IdModule  = SM1206;
 EndCmp
 
 BeginCmp
-TimeStamp = /5529019E;
-Reference = CON1;
-ValeurCmp = AVR-ISP-10;
-IdModule  = PIN_ARRAY_5x2;
-EndCmp
-
-BeginCmp
 TimeStamp = /5528FE3C;
 Reference = D1;
 ValeurCmp = LED;
@@ -75,13 +68,6 @@ TimeStamp = /5528FB75;
 Reference = D2;
 ValeurCmp = BRIDGE;
 IdModule  = PIN_ARRAY_4x1;
-EndCmp
-
-BeginCmp
-TimeStamp = /5528FF26;
-Reference = F1;
-ValeurCmp = FUSE;
-IdModule  = FUSE5-20;
 EndCmp
 
 BeginCmp
@@ -113,7 +99,7 @@ IdModule  = PIN_ARRAY-6X1;
 EndCmp
 
 BeginCmp
-TimeStamp = /55290DB8;
+TimeStamp = /55295FCC;
 Reference = P3;
 ValeurCmp = CONN_6;
 IdModule  = PIN_ARRAY-6X1;
@@ -148,10 +134,17 @@ IdModule  = SM1206;
 EndCmp
 
 BeginCmp
+TimeStamp = /5529650E;
+Reference = R2;
+ValeurCmp = R;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
 TimeStamp = /5528FDD5;
 Reference = U1;
 ValeurCmp = 7805;
-IdModule  = TO220_VERT;
+IdModule  = TO92;
 EndCmp
 
 BeginCmp
