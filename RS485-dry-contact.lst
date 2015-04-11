@@ -1,0 +1,68 @@
+eeschema (2013-dec-23)-stable  >> Creation date: Сб 11 апр 2015 15:45:39
+#Cmp ( order = Reference )
+| C1         CP1         
+| C2         C           
+| C3         C           
+| C4         C           
+| C5         C           
+| C6         CP1         
+| CON1       AVR-ISP-10  
+| D1         LED         
+| D2         BRIDGE      
+| D3         LED         
+| D4         LED         
+| D5         LED         
+| D6         LED         
+| D7         LED         
+| D8         LED         
+| F1         FUSE        
+| IC1        ATMEGA168PA-A
+| IC2        SP3485EN    
+| P1         CONN_2      
+| P2         CONN_6      
+| P3         CONN_6      
+| P4         CONN_2      
+| R1         R           
+| R2         R           
+| R3         R           
+| R4         R           
+| R5         R           
+| R6         R           
+| R7         R           
+| U1         7805        
+#End Cmp
+
+#Cmp ( order = Value )
+| CP1          C1        
+| C            C2        
+| C            C3        
+| C            C4        
+| C            C5        
+| CP1          C6        
+| AVR-ISP-10   CON1      
+| LED          D1        
+| BRIDGE       D2        
+| LED          D3        
+| LED          D4        
+| LED          D5        
+| LED          D6        
+| LED          D7        
+| LED          D8        
+| FUSE         F1        
+| SP3485EN     IC2       
+| ATMEGA168PA-A IC1       
+| CONN_2       P1        
+| CONN_6       P2        
+| CONN_6       P3        
+| CONN_2       P4        
+| R            R1        
+| R            R2        
+| R            R3        
+| R            R4        
+| R            R5        
+| R            R6        
+| R            R7        
+| 7805         U1        
+#End Cmp
+
+#End List

@@ -1,0 +1,164 @@
+Cmp-Mod V01 Created by CvPcb (2013-dec-23)-stable date = Сб 11 апр 2015 20:49:07
+
+BeginCmp
+TimeStamp = /5528FC5B;
+Reference = C1;
+ValeurCmp = CP1;
+IdModule  = CP10;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FC9A;
+Reference = C2;
+ValeurCmp = C;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FDFC;
+Reference = C3;
+ValeurCmp = C;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /55291C4F;
+Reference = C4;
+ValeurCmp = C;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /55291C5E;
+Reference = C5;
+ValeurCmp = C;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /55291C6D;
+Reference = C6;
+ValeurCmp = CP1;
+IdModule  = CP8;
+EndCmp
+
+BeginCmp
+TimeStamp = /552936C2;
+Reference = C7;
+ValeurCmp = C;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /552936C8;
+Reference = C8;
+ValeurCmp = C;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /5529019E;
+Reference = CON1;
+ValeurCmp = AVR-ISP-10;
+IdModule  = PIN_ARRAY_5x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FE3C;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = LED-3MM;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FB75;
+Reference = D2;
+ValeurCmp = BRIDGE;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FF26;
+Reference = F1;
+ValeurCmp = FUSE;
+IdModule  = FUSE5-20;
+EndCmp
+
+BeginCmp
+TimeStamp = /5529006D;
+Reference = IC1;
+ValeurCmp = ATMEGA168PA-A;
+IdModule  = TQFP32;
+EndCmp
+
+BeginCmp
+TimeStamp = /5529018F;
+Reference = IC2;
+ValeurCmp = SP3485EN;
+IdModule  = SO8N;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FF66;
+Reference = P1;
+ValeurCmp = CONN_2;
+IdModule  = bornier2;
+EndCmp
+
+BeginCmp
+TimeStamp = /552920AA;
+Reference = P2;
+ValeurCmp = CONN_6;
+IdModule  = PIN_ARRAY-6X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /55290DB8;
+Reference = P3;
+ValeurCmp = CONN_6;
+IdModule  = PIN_ARRAY-6X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /55291219;
+Reference = P4;
+ValeurCmp = CONN_2;
+IdModule  = bornier2;
+EndCmp
+
+BeginCmp
+TimeStamp = /55294242;
+Reference = P5;
+ValeurCmp = CONN_4;
+IdModule  = bornier4;
+EndCmp
+
+BeginCmp
+TimeStamp = /55294EA3;
+Reference = P6;
+ValeurCmp = CONN_7;
+IdModule  = bornier6;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FE23;
+Reference = R1;
+ValeurCmp = R;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /5528FDD5;
+Reference = U1;
+ValeurCmp = 7805;
+IdModule  = TO220_VERT;
+EndCmp
+
+BeginCmp
+TimeStamp = /552935AB;
+Reference = X1;
+ValeurCmp = CRYSTAL;
+IdModule  = ;
+EndCmp
+
+EndListe
