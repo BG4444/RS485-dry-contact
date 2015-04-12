@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-dec-23)-stable date = Вс 12 апр 2015 13:34:45
+Cmp-Mod V01 Created by CvPcb (2013-dec-23)-stable date = Вс 12 апр 2015 21:39:42
 
 BeginCmp
 TimeStamp = /5528FC5B;
@@ -36,13 +36,6 @@ IdModule  = SM1206;
 EndCmp
 
 BeginCmp
-TimeStamp = /552A48E4;
-Reference = C6;
-ValeurCmp = CP1;
-IdModule  = c_tant_D;
-EndCmp
-
-BeginCmp
 TimeStamp = /552936C2;
 Reference = C7;
 ValeurCmp = C;
@@ -71,6 +64,27 @@ IdModule  = PIN_ARRAY_4x1;
 EndCmp
 
 BeginCmp
+TimeStamp = /552AB21A;
+Reference = D3;
+ValeurCmp = LED;
+IdModule  = LED-1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /552AB893;
+Reference = D4;
+ValeurCmp = LED;
+IdModule  = LED-1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /552ABAE8;
+Reference = D5;
+ValeurCmp = LED;
+IdModule  = LED-1206;
+EndCmp
+
+BeginCmp
 TimeStamp = /5529006D;
 Reference = IC1;
 ValeurCmp = ATMEGA168PA-A;
@@ -82,6 +96,13 @@ TimeStamp = /5529018F;
 Reference = IC2;
 ValeurCmp = SP3485EN;
 IdModule  = SO8N;
+EndCmp
+
+BeginCmp
+TimeStamp = /552AB124;
+Reference = K1;
+ValeurCmp = CONN_3;
+IdModule  = bornier3;
 EndCmp
 
 BeginCmp
@@ -113,10 +134,10 @@ IdModule  = bornier2;
 EndCmp
 
 BeginCmp
-TimeStamp = /55294EA3;
-Reference = P6;
-ValeurCmp = CONN_7;
-IdModule  = bornier6;
+TimeStamp = /552AB135;
+Reference = P5;
+ValeurCmp = CONN_4;
+IdModule  = bornier4;
 EndCmp
 
 BeginCmp
@@ -129,6 +150,27 @@ EndCmp
 BeginCmp
 TimeStamp = /5529650E;
 Reference = R2;
+ValeurCmp = R;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /552AB339;
+Reference = R3;
+ValeurCmp = R;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /552AB899;
+Reference = R4;
+ValeurCmp = R;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /552ABAEE;
+Reference = R5;
 ValeurCmp = R;
 IdModule  = SM1206;
 EndCmp

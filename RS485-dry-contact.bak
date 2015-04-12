@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "11 apr 2015"
+Date "12 apr 2015"
 Rev ""
 Comp ""
 Comment1 ""
@@ -246,17 +246,6 @@ F 3 "~" H 6200 6150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP1 C6
-U 1 1 55291C6D
-P 6600 6150
-F 0 "C6" H 6650 6250 50  0000 L CNN
-F 1 "CP1" H 6650 6050 50  0000 L CNN
-F 2 "~" H 6600 6150 60  0000 C CNN
-F 3 "~" H 6600 6150 60  0000 C CNN
-	1    6600 6150
-	1    0    0    -1  
-$EndComp
-$Comp
 L GND #PWR07
 U 1 1 55291E59
 P 6200 6600
@@ -389,17 +378,6 @@ F 3 "" H 8950 4900 60  0000 C CNN
 	1    8950 4900
 	1    0    0    -1  
 $EndComp
-$Comp
-L CONN_4 P5
-U 1 1 55294242
-P 7000 1600
-F 0 "P5" V 6950 1600 50  0000 C CNN
-F 1 "CONN_4" V 7050 1600 50  0000 C CNN
-F 2 "~" H 7000 1600 60  0000 C CNN
-F 3 "~" H 7000 1600 60  0000 C CNN
-	1    7000 1600
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	3700 2150 3700 4650
 Wire Wire Line
@@ -476,7 +454,7 @@ Wire Wire Line
 Connection ~ 5100 2700
 Connection ~ 5200 5000
 Wire Wire Line
-	7200 4150 8400 4150
+	8400 4150 7200 4150
 Wire Wire Line
 	7200 4300 7850 4300
 Wire Wire Line
@@ -490,36 +468,20 @@ Wire Wire Line
 Wire Wire Line
 	7750 4400 7200 4400
 Wire Wire Line
-	7200 2800 7400 2800
-Wire Wire Line
-	7400 2800 7400 4950
-Wire Wire Line
-	7400 4950 8550 4950
-Wire Wire Line
-	7200 2900 7250 2900
-Wire Wire Line
-	7250 2900 7250 4850
-Wire Wire Line
-	7250 4850 8550 4850
-Wire Wire Line
 	10450 4800 9350 4800
 Wire Wire Line
 	9350 5000 10450 5000
 Wire Wire Line
 	5800 5950 5800 5850
 Wire Wire Line
-	5800 5850 6600 5850
-Wire Wire Line
-	6600 5850 6600 5950
+	5800 5850 6550 5850
 Wire Wire Line
 	6200 5700 6200 5950
 Connection ~ 6200 5850
 Wire Wire Line
 	5800 6350 5800 6450
 Wire Wire Line
-	5800 6450 6600 6450
-Wire Wire Line
-	6600 6450 6600 6350
+	5800 6450 6550 6450
 Wire Wire Line
 	6200 6350 6200 6600
 Connection ~ 6200 6450
@@ -563,35 +525,15 @@ Wire Wire Line
 Wire Wire Line
 	7200 4800 7300 4800
 Wire Wire Line
-	7300 4800 7300 2200
-Wire Wire Line
-	7300 2200 6850 2200
-Wire Wire Line
-	6850 2200 6850 1950
-Wire Wire Line
 	7200 4900 7350 4900
 Wire Wire Line
 	7350 4900 7350 2150
-Wire Wire Line
-	7350 2150 6950 2150
-Wire Wire Line
-	6950 2150 6950 1950
-Wire Wire Line
-	7050 1950 7050 2100
-Wire Wire Line
-	7050 2100 7500 2100
 Wire Wire Line
 	7500 2100 7500 5000
 Wire Wire Line
 	7500 5000 7200 5000
 Wire Wire Line
 	7200 2700 7250 2700
-Wire Wire Line
-	7250 2700 7250 2050
-Wire Wire Line
-	7250 2050 7150 2050
-Wire Wire Line
-	7150 2050 7150 1950
 $Comp
 L CONN_7 P6
 U 1 1 55294EA3
@@ -603,14 +545,6 @@ F 3 "~" H 4450 1400 60  0000 C CNN
 	1    4450 1400
 	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	7200 4600 7450 4600
-Wire Wire Line
-	7450 4600 7450 5400
-Wire Wire Line
-	7450 5400 4150 5400
-Wire Wire Line
-	4150 5400 4150 1750
 Wire Wire Line
 	4450 1750 4450 5350
 Wire Wire Line
@@ -699,7 +633,7 @@ Wire Wire Line
 Wire Wire Line
 	8300 3650 7200 3650
 Wire Wire Line
-	8400 4150 8400 3150
+	8400 3150 8400 4150
 Wire Wire Line
 	8400 3150 9150 3150
 $Comp
@@ -729,4 +663,37 @@ F 3 "" H 9550 3900 60  0000 C CNN
 $EndComp
 Wire Wire Line
 	9550 3900 9300 3900
+Wire Wire Line
+	8550 4950 7950 4950
+Wire Wire Line
+	7950 4950 7950 3950
+Wire Wire Line
+	7950 3950 7200 3950
+Wire Wire Line
+	7200 4050 8050 4050
+Wire Wire Line
+	8050 4050 8050 4850
+Wire Wire Line
+	8050 4850 8550 4850
+Wire Wire Line
+	4150 1750 4150 2200
+Wire Wire Line
+	4150 2200 7300 2200
+Wire Wire Line
+	7300 2200 7300 4800
+$Comp
+L CP1 C6
+U 1 1 552A48E4
+P 6550 6150
+F 0 "C6" H 6600 6250 50  0000 L CNN
+F 1 "CP1" H 6600 6050 50  0000 L CNN
+F 2 "~" H 6550 6150 60  0000 C CNN
+F 3 "~" H 6550 6150 60  0000 C CNN
+	1    6550 6150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6550 6450 6550 6350
+Wire Wire Line
+	6550 5850 6550 5950
 $EndSCHEMATC
