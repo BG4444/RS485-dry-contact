@@ -1,4 +1,4 @@
-EESchema-LIBRARY Version 2.3  Date: Вс 12 апр 2015 21:43:31
+EESchema-LIBRARY Version 2.3  Date: Пн 20 апр 2015 09:13:09
 #encoding utf-8
 #
 # 7805
@@ -308,7 +308,7 @@ X DI 4 -400 -150 150 R 40 40 1 1 I
 X GND 5 0 -350 150 U 40 40 1 1 W
 X A 6 400 100 150 L 40 40 1 1 B
 X B 7 400 -100 150 L 40 40 1 1 B
-X VCC 8 0 350 150 D 40 40 1 1 W
+X VCC 7 0 350 150 D 40 40 1 1 W
 ENDDRAW
 ENDDEF
 #
