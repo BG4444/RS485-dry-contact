@@ -2,7 +2,7 @@
 #include <avr/eeprom.h>
 #include <inttypes.h>
 
-uint8_t EEMEM mac=    0b00000001;
+uint8_t EEMEM mac=    0b00000000;
 uint8_t EEMEM mac_crc=0b10101010;
 
 enum Status
