@@ -9,11 +9,25 @@ inline void input_on()
 	PORTC &= ~(1 << PINC5);
 }
 
+inline void input_off()
+{
+	UCSR0B &= ~((1<<RXCIE0) | (1<<RXEN0));
+	PORTC  |= (1 << PINC5);
+}
+
+
 inline void output_on()
 {
 	UCSR0B|= (1<<TXCIE0) | (1 <<TXEN0);
 	PORTC |= (1 << PINC4);
 }
+
+inline void output_off()
+{
+	UCSR0B&= ~((1<<TXCIE0) | (1 <<TXEN0));
+	PORTC &= ~((1 << PINC4));
+}
+
 
 
 inline void invert_status()
@@ -51,7 +65,7 @@ inline void tx_mode_regular()
 
 inline void reset_tx_clock()
 {
-	TCNT0=256-130;
+	TCNT0=256-147;
 }
 
 void start_tx_timer();

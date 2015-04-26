@@ -2,8 +2,8 @@
 #include <avr/eeprom.h>
 #include <inttypes.h>
 
-uint8_t EEMEM mac;
-uint8_t EEMEM mac_crc=0b10101010;
+uint8_t EEMEM mac=    0b00000001;
+uint8_t EEMEM mac_crc=0b10101011;
 
 enum Status
 {
@@ -39,6 +39,11 @@ ISR(TIMER1_OVF_vect)
 		{
 			invert_status();
 			invert_tx();
+			break;
+		}
+		case wait_for_master:
+		{
+			invert_status();
 			break;
 		}
 	}
@@ -80,9 +85,27 @@ ISR(USART_TX_vect)
 			writer_status=done;
 			break;
 		}
+		case done:
+		{
+			output_off();
+			invert_status();
+		}
 
 	}
 }
+
+ISR(USART_RX_vect)
+{
+	if(UDR0==0)
+	{
+		input_off();
+		status=active;
+		start_tx_timer();
+		TCNT0=256-(147-37);
+		cur_dev_id=1;
+	}
+}
+
 
 
 void init_io()
@@ -152,5 +175,5 @@ uint8_t current_status()
 	const uint8_t pinsc= PINC & ( (1<<PINC0) | (1<<PINC1)                );
 	const uint8_t pinsd=(PIND & ( (1<<PIND4) | (1<<PIND5)              ) )>>1;
 
-	return pinsb | pinsc | pinsd;
+	return pinsb | pinsc | pinsd | (1<<7);
 }
