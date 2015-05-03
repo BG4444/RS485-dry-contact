@@ -2,48 +2,74 @@
 #include <avr/eeprom.h>
 #include <inttypes.h>
 
-uint8_t EEMEM mac=    0b00000000;
-uint8_t EEMEM mac_crc=0b10101010;
+uint8_t EEMEM mac=    3;        //device-id     for .eep-file
+uint8_t EEMEM mac_crc=3^0b10101010;   	 //device-id crc for .epp-file
 
 enum Status
 {
-	init_master,
-	garbaged_config,
-	active,
-	wait_for_master,
-	first,
-	second,
-	done
-
+	garbaged_config,				     //device id does not match it's crc
+	sending_dev_id_done,
+	unknown,
+	collision,
+	collision2
 };
 
-volatile uint8_t status;
-volatile uint8_t dev_id;
-volatile uint8_t clock;
-volatile uint8_t cur_dev_id;
-volatile uint8_t writer_status;
-volatile uint8_t pin_status;
+volatile uint8_t dev_id;  			//device id
+volatile uint8_t status;  			//global status
+volatile uint8_t sending_status=unknown;
+volatile uint8_t old_pin_status=0xff;	//pin status on previous check
+volatile uint8_t sending_buffer;	
+volatile uint8_t sending_counter=0;
+volatile uint8_t dev_id_shift;
+
+
+ISR(TIMER2_OVF_vect)
+{
+	sending_counter-=32;
+	if(sending_counter)
+	{
+		if( (sending_counter) <= (dev_id_shift) )
+		{
+			max_out_off();
+		}		
+		else
+		{
+			__asm__ __volatile__("nop\nnop\nnop\n");
+		}
+		reset_timer2();
+	}
+	else
+	{
+		max_out_off();
+		sending_status=sending_dev_id_done;
+		stop_timer2();
+	}
+}
+
 
 ISR(TIMER1_OVF_vect)
 {
 	switch(status)
 	{
-		case init_master:
+		case garbaged_config:       //if config isn't valid, blink status & tx every second
 		{
-			invert_status();
-			status=active;
-			start_tx_timer();
-			break;
-		}
-		case garbaged_config:
-		{
-			invert_status();
 			invert_tx();
+			invert_status();
 			break;
 		}
-		case wait_for_master:
+	}
+	switch(sending_status)
+	{
+		case collision:
 		{
 			invert_status();
+			sending_status=collision2;
+			break;
+		}
+		case collision2:
+		{
+			invert_status();
+			sending_status=unknown;
 			break;
 		}
 	}
@@ -51,108 +77,86 @@ ISR(TIMER1_OVF_vect)
 
 ISR(TIMER0_OVF_vect)
 {
-	if(cur_dev_id++==dev_id)
+	const uint8_t stat=current_status();
+	if(stat!=old_pin_status)		   //if status changed since last check
 	{
-		invert_status();
-		output_on();
-		UDR0=dev_id;	
-		writer_status=first;	
+		old_pin_status=current_status();
+		send_update(stat);         //initiate sending machine
 	}
-	else
-	{
-		if(cur_dev_id & 0x8)
-		{
-			cur_dev_id=0;
-		}
-	}
-	reset_tx_clock();
 }
 
 ISR(USART_TX_vect)
 {
-	switch(writer_status)
-	{
-		case first:
-		{
-			pin_status=current_status();
-			UDR0=pin_status;
-			writer_status=second;
-			break;
-		}
-		case second:
-		{
-			UDR0=pin_status^dev_id;
-			writer_status=done;
-			break;
-		}
-		case done:
-		{
-			output_off();
-			invert_status();
-		}
-
-	}
+	
 }
 
 ISR(USART_RX_vect)
 {
-	if(UDR0==0)
+	switch(sending_status)
 	{
-		input_off();
-		status=active;
-		start_tx_timer();
-		TCNT0=256-(147-37);
-		cur_dev_id=1;
+		case sending_dev_id_done:
+		{
+			if( (((1<<(dev_id))<<1)-1) == UDR0 )
+			{
+				invert_status();	
+				sending_status=unknown;		
+			}
+			else
+			{
+				sending_status=collision;
+			}
+		}
 	}
 }
+
 
 
 
 void init_io()
 {
 	DDRB=0;
-	PORTB= (1<<PINB3) | (1<<PINB4) | (1<<PINB5);
+	PORTB= (1<<PINB3) | (1<<PINB4) | (1<<PINB5);  //enable input pull-ups
 
-	DDRC = (1<<PINC4) | (1<< PINC5);
-	PORTC= (1<<PINC0) | (1<<PINC1);
+	DDRC = (1<<PINC4) | (1<< PINC5);              //enable max485 contol lines
+	PORTC= (1<<PINC0) | (1<<PINC1);               //enable input pull-ups
 
-	DDRD = (1 << PIND3);
-	PORTD= (1 << PIND4) | (1<<PIND5);
+	DDRD = (1 << PIND1) | (1 << PIND3);           //enabe status led control and tx line
+	PORTD= (1 << PIND4) | (1 << PIND5);           //enable input pull-ups		
 }
-
 void init_timer()
 {
-	TCCR1B= 1<<CS12;
-	TIMSK1= 1<<TOIE1;
-	
+	//timer0 - about 244Hz  - read inputs
+	TIMSK0=1<<TOIE0;		
 	TCCR0B= (1<<CS02) | (1<<CS00);		
+	//timer1 - about 0.95Hz - status led
+	TCCR1B= 1<<CS12;
+	TIMSK1= 1<<TOIE1;	
+	//timer2 - USART bitbang 16e6/38400=8*52	
+	TCCR2B= (1<<CS21);
+	
 }
 
 void init_config()
 {
+//read device id and it's crc
 	dev_id=eeprom_read_byte(&mac);
 	const uint8_t cfgctrl=eeprom_read_byte(&mac_crc);
+
     status_on();
+//if id matches crc
 	if(dev_id == (cfgctrl ^ 0b10101010))
 	{
-		if(dev_id==0x00)
-		{
-			status=init_master;
-		}
-		else
-		{
-			status=wait_for_master;
-			input_on();
-		}
+		dev_id_shift=dev_id<<5;
 	}
 	else
-	{		
+	{	
+		//blinking tx and status leds one-by-one
 		tx_mode_regular();		     				
 		status=garbaged_config;	
 	}
 }
 
-void init_usart()
+void init_usart()   //only enables USART, but rx and tx clock are stopped and MAX485 i/o disabled
 {
 //speed 38400
 	UBRR0H=0;
@@ -162,18 +166,25 @@ void init_usart()
 
 }
 
-void start_tx_timer()
-{
-	reset_tx_clock();
-	cur_dev_id=0;
-	TIMSK0=1<<TOIE0;	
-}
-
-uint8_t current_status()
+uint8_t current_status()   //read all input pins. 7th bit is always 1
 {
 	const uint8_t pinsb=(PINB & ( (1<<PINB3) | (1<<PINB4) | (1<<PINB5) ) )<<1;
 	const uint8_t pinsc= PINC & ( (1<<PINC0) | (1<<PINC1)                );
 	const uint8_t pinsd=(PIND & ( (1<<PIND4) | (1<<PIND5)              ) )>>1;
 
 	return pinsb | pinsc | pinsd | (1<<7);
+}
+
+void send_update(uint8_t stat)
+{
+	if(sending_status!=unknown)
+	{
+		return;
+	}
+	sending_buffer=stat;
+	
+	usart_disable_tx();
+	tx_off();
+	start_timer2();
+	max_out_on();
 }
