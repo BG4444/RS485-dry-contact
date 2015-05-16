@@ -2,8 +2,8 @@
 #include <avr/eeprom.h>
 #include <inttypes.h>
 
-uint8_t EEMEM mac=    3;        //device-id     for .eep-file
-uint8_t EEMEM mac_crc=3^0b10101010;   	 //device-id crc for .epp-file
+uint8_t EEMEM mac=    4;        //device-id     for .eep-file
+uint8_t EEMEM mac_crc=4^0b10101010;   	 //device-id crc for .epp-file
 
 enum Status
 {
@@ -11,7 +11,10 @@ enum Status
 	sending_dev_id_done,
 	unknown,
 	collision,
-	collision2
+	collision2,
+	receiveing_first_ok,
+	first_portion_sent,
+	second_portion_sent
 };
 
 volatile uint8_t dev_id;  			//device id
@@ -19,31 +22,31 @@ volatile uint8_t status;  			//global status
 volatile uint8_t sending_status=unknown;
 volatile uint8_t old_pin_status=0xff;	//pin status on previous check
 volatile uint8_t sending_buffer;	
-volatile uint8_t sending_counter=0;
+volatile uint32_t sending_counter=0b00000000000010000000000000000000;
 volatile uint8_t dev_id_shift;
+volatile uint32_t sendbuf;
+volatile uint8_t ref;
 
 
 ISR(TIMER2_OVF_vect)
 {
-	sending_counter-=32;
 	if(sending_counter)
 	{
-		if( (sending_counter) <= (dev_id_shift) )
+		if(sending_counter & sendbuf)
 		{
 			max_out_off();
 		}		
 		else
 		{
-			__asm__ __volatile__("nop\nnop\nnop\n");
+			max_out_on();
 		}
 		reset_timer2();
 	}
 	else
 	{
-		max_out_off();
-		sending_status=sending_dev_id_done;
-		stop_timer2();
+		status=sending_dev_id_done;
 	}
+	sending_counter>>=1;
 }
 
 
@@ -87,7 +90,22 @@ ISR(TIMER0_OVF_vect)
 
 ISR(USART_TX_vect)
 {
-	
+	switch(sending_status)
+	{
+		case first_portion_sent:
+		{
+			sending_status=second_portion_sent;
+			UDR0=sending_buffer^dev_id;
+			break;
+		}
+		case second_portion_sent:
+		{
+			sending_status=unknown;
+			output_off();
+			break;
+		}
+
+	}
 }
 
 ISR(USART_RX_vect)
@@ -96,16 +114,34 @@ ISR(USART_RX_vect)
 	{
 		case sending_dev_id_done:
 		{
-			if( (((1<<(dev_id))<<1)-1) == UDR0 )
+			if( ref == UDR0 )
 			{
 				invert_status();	
-				sending_status=unknown;		
+				sending_status=receiveing_first_ok;
 			}
 			else
 			{
-				sending_status=collision;
+				sending_status=unknown;
+				old_pin_status=0;
 			}
+			break;
 		}
+		case receiveing_first_ok:
+		{
+			if(ref == UDR0)
+			{
+				sending_status=first_portion_sent;
+				output_on();
+				UDR0=sending_buffer;
+			}
+			else
+			{
+				sending_status=unknown;
+				old_pin_status=0;
+			}
+			break;
+		}
+
 	}
 }
 
@@ -146,6 +182,8 @@ void init_config()
 //if id matches crc
 	if(dev_id == (cfgctrl ^ 0b10101010))
 	{
+		
+		ref=( ( (1<<(dev_id) ) <<1) -1 );
 		dev_id_shift=dev_id<<5;
 	}
 	else
@@ -185,6 +223,9 @@ void send_update(uint8_t stat)
 	
 	usart_disable_tx();
 	tx_off();
+	const uint32_t tref=ref;
+	sendbuf=0b00000000000000000000010000000001 | (tref<<1) | (tref <<11);
+
 	start_timer2();
-	max_out_on();
+
 }

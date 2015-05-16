@@ -72,7 +72,7 @@ inline void tx_mode_regular()
 
 inline void reset_timer2()
 {
-	TCNT2=255-52;
+	TCNT2=255-42;
 	GTCCR |= 1<<PSRASY;	
 }
 
