@@ -96,7 +96,7 @@ ISR(USART_TX_vect)
 		case first_portion_sent:
 		{
 			sending_status=second_portion_sent;
-			UDR0=sending_buffer^dev_id;
+			UDR0=~(sending_buffer^dev_id);
 			break;
 		}
 		case second_portion_sent:
