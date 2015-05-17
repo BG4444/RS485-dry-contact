@@ -45,6 +45,7 @@ ISR(TIMER2_OVF_vect)
 	else
 	{
 		status=sending_dev_id_done;
+		stop_timer2();
 	}
 	sending_counter>>=1;
 }
