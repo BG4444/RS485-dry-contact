@@ -225,8 +225,9 @@ void send_update(uint8_t stat)
 	usart_disable_tx();
 	tx_off();
 	const uint32_t tref=ref;
+	invert_status();
 	sendbuf=0b00000000000000000000010000000001 | (tref<<1) | (tref <<11);
-
+	sending_counter=0b00000000000010000000000000000000;
 	start_timer2();
 
 }
